@@ -1,21 +1,13 @@
 # Linux Kernel Rust Echo Driver Makefile
 
-# Kernel build system integration
 ifneq ($(KERNELRELEASE),)
-    # Kernel build system is calling us (second pass)
-
-    # Module name (must match your .rs filename without extension)
-    obj-m := echo_driver.o
+    obj-m := main.o
 
     # Additional Rust flags
-    RUSTFLAGS_echo_driver.o := --extern kernel=$(src)/bindings_generated.rs
+    RUSTFLAGS_main.o := --extern kernel=$(src)/bindings_generated.rs
 
 else
-    # Normal make invocation (first pass)
-
-    # Path to kernel build directory
     KERNELDIR ?= /lib/modules/$(shell uname -r)/build
-    # For custom kernel: KERNELDIR ?= /path/to/your/kernel/source
 
     # Rust toolchain configuration
     export RUSTC=$(shell which rustc)
